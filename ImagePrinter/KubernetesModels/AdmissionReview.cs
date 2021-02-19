@@ -74,11 +74,11 @@ namespace ImagePrinter
     
         /// <summary>Object is the object from the incoming request.</summary>
         [Newtonsoft.Json.JsonProperty("object", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RawExtension Object { get; set; }
+        public System.Text.Json.JsonElement Object { get; set; }
     
         /// <summary>OldObject is the existing object. Only populated for DELETE and UPDATE requests.</summary>
         [Newtonsoft.Json.JsonProperty("oldObject", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RawExtension OldObject { get; set; }
+        public System.Text.Json.JsonElement OldObject { get; set; }
     
         /// <summary>Operation is the operation being performed. This may be different than the operation requested. e.g. a patch can result in either a CREATE or UPDATE Operation.</summary>
         [Newtonsoft.Json.JsonProperty("operation", Required = Newtonsoft.Json.Required.Always)]
@@ -87,7 +87,7 @@ namespace ImagePrinter
     
         /// <summary>Options is the operation option structure of the operation being performed. e.g. `meta.k8s.io/v1.DeleteOptions` or `meta.k8s.io/v1.CreateOptions`. This may be different than the options the caller provided. e.g. for a patch request the performed Operation might be a CREATE, in which case the Options will a `meta.k8s.io/v1.CreateOptions` even though the caller provided `meta.k8s.io/v1.PatchOptions`.</summary>
         [Newtonsoft.Json.JsonProperty("options", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RawExtension Options { get; set; }
+        public System.Text.Json.JsonElement Options { get; set; }
     
         /// <summary>RequestKind is the fully-qualified type of the original API request (for example, v1.Pod or autoscaling.v1.Scale). If this is specified and differs from the value in "kind", an equivalent match and conversion was performed.
         /// 
