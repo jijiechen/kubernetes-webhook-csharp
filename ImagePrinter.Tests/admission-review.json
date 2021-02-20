@@ -58,7 +58,7 @@
         "containers": [
           {
             "name": "nginx",
-            "image": "nginx:1.7.9",
+            "image": "gcr.io/nginx:1.7.9",
             "ports": [
               {
                 "containerPort": 80,

@@ -2,7 +2,9 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using k8s.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
@@ -35,9 +37,13 @@ namespace ImagePrinter.Tests
             var json = await sr.ReadToEndAsync();
 
             var reviewBody = new StringContent(json, Encoding.Default, "application/json");
-            var reviewResponse = await _client.PostAsync("/validate", reviewBody);
+            var httpResponse = await _client.PostAsync("/validate", reviewBody);
             
-            Assert.Equal(HttpStatusCode.OK, reviewResponse.StatusCode);
+            var responseText = await httpResponse.Content.ReadAsStringAsync();
+            var reviewInResponse = JsonSerializer.Deserialize<AdmissionReview>(responseText, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+            Assert.False(reviewInResponse.Response.Allowed);
         }
     }
 }

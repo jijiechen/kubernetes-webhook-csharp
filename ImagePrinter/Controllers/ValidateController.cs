@@ -30,11 +30,7 @@ namespace ImagePrinter.Controllers
         private AdmissionResponse Validate(AdmissionReview review)
         {
             var podJson = review.Request.Object.GetRawText();
-            var podResource = JsonSerializer.Deserialize<V1Pod>(podJson, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Encoder = JavaScriptEncoder.Default
-            });
+            var podResource = JsonSerializer.Deserialize<V1Pod>(podJson, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
 
             var allowed = true;
             if (podResource?.Spec != null)
