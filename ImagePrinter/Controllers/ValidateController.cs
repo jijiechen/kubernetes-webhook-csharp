@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 using k8s.Models;
 using Microsoft.AspNetCore.Mvc;

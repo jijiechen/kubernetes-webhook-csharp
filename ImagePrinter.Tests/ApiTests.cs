@@ -30,7 +30,7 @@ namespace ImagePrinter.Tests
         }
         
         [Fact]
-        public async Task TestPostAdmissionReview()
+        public async Task TestValidate()
         {
             var jsonStream = this.GetType().Assembly.GetManifestResourceStream("ImagePrinter.Tests.admission-review.json");
             using var sr = new StreamReader(jsonStream!);
@@ -44,6 +44,26 @@ namespace ImagePrinter.Tests
             
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
             Assert.False(reviewInResponse.Response.Allowed);
+        }
+        
+        
+        [Fact]
+        public async Task TestMutation()
+        {
+            var jsonStream = this.GetType().Assembly.GetManifestResourceStream("ImagePrinter.Tests.admission-review.json");
+            using var sr = new StreamReader(jsonStream!);
+            var json = await sr.ReadToEndAsync();
+
+            var reviewBody = new StringContent(json, Encoding.Default, "application/json");
+            var httpResponse = await _client.PostAsync("/mutate", reviewBody);
+            
+            var responseText = await httpResponse.Content.ReadAsStringAsync();
+            var reviewInResponse = JsonSerializer.Deserialize<AdmissionReview>(responseText, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+            Assert.True(reviewInResponse.Response.Allowed);
+            Assert.NotNull(reviewInResponse.Response.Patch);
+            Assert.Equal("JSONPatch", reviewInResponse.Response.PatchType);
         }
     }
 }
