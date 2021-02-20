@@ -1,4 +1,7 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using k8s.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -24,23 +27,36 @@ namespace ImagePrinter.Controllers
             return WrapAsReview(response, reviewRequest);
         }
         
- 
         private AdmissionResponse Validate(AdmissionReview review)
         {
-            var resourceRequest = review.Request;
-            
-            var podResource = JsonSerializer.Deserialize<V1Pod>(resourceRequest.Object.GetRawText());
-            if (podResource.Spec != null)
+            var podJson = review.Request.Object.GetRawText();
+            var podResource = JsonSerializer.Deserialize<V1Pod>(podJson, new JsonSerializerOptions()
             {
-                foreach (var container in podResource.Spec.Containers)
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                Encoder = JavaScriptEncoder.Default
+            });
+
+            var allowed = true;
+            if (podResource?.Spec != null)
+            {
+                var usedImages = new List<string>()
+                    .Concat(podResource.Spec.Containers.NotEmpty().Select(c => c.Image))
+                    .Concat(podResource.Spec.InitContainers.NotEmpty().Select(c => c.Image))
+                    .Concat(podResource.Spec.EphemeralContainers.NotEmpty().Select(c => c.Image))
+                    .Distinct()
+                    .ToList();
+                
+                usedImages.ForEach(img =>
                 {
-                    _logger.LogInformation($"Container Image: {container.Image}");
-                }
+                    _logger.LogInformation($"Container Image: {img}");
+                });
+                
+                allowed = usedImages.All(img => !img.Contains("gcr.io"));
             }
 
             return new AdmissionResponse
             {
-                Allowed = true,
+                Allowed = allowed,
                 Status = new Status
                 {
                     Code = (int) HttpStatusCode.OK,
@@ -58,6 +74,15 @@ namespace ImagePrinter.Controllers
                 Kind = originalRequest.Kind,
                 Response = response
             };
+        }
+
+    }
+
+    static class NotEmptyEnumerable
+    {
+        public static IEnumerable<T> NotEmpty<T>(this IEnumerable<T> items)
+        {
+            return items ?? new T[0];
         }
     }
 }
