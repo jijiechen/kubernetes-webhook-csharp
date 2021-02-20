@@ -6,7 +6,7 @@ using k8s.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace ImagePrinter.Controllers
+namespace WebhookSharp.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <RootNamespace>WebhookSharp.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,16 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImagePrinter\ImagePrinter.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="admission-review.json" />
     <EmbeddedResource Include="admission-review.json">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebhookSharp\WebhookSharp.csproj" />
   </ItemGroup>
 
 </Project>

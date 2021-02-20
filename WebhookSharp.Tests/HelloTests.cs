@@ -1,11 +1,11 @@
 using Xunit;
 
-namespace ImagePrinter.Tests
+namespace WebhookSharp.Tests
 {
     public class HelloTests
     {
         [Fact]
-        public void Hehe()
+        public void Hello()
         {
             Assert.True(true);
         }

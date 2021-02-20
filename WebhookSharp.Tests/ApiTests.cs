@@ -4,11 +4,10 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using k8s.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace ImagePrinter.Tests
+namespace WebhookSharp.Tests
 {
     public class ApiTests : IClassFixture<WebApplicationFactory<Startup>>
     {
@@ -32,7 +31,7 @@ namespace ImagePrinter.Tests
         [Fact]
         public async Task TestValidate()
         {
-            var jsonStream = this.GetType().Assembly.GetManifestResourceStream("ImagePrinter.Tests.admission-review.json");
+            var jsonStream = this.GetType().Assembly.GetManifestResourceStream("WebhookSharp.Tests.admission-review.json");
             using var sr = new StreamReader(jsonStream!);
             var json = await sr.ReadToEndAsync();
 
@@ -50,7 +49,7 @@ namespace ImagePrinter.Tests
         [Fact]
         public async Task TestMutation()
         {
-            var jsonStream = this.GetType().Assembly.GetManifestResourceStream("ImagePrinter.Tests.admission-review.json");
+            var jsonStream = this.GetType().Assembly.GetManifestResourceStream("WebhookSharp.Tests.admission-review.json");
             using var sr = new StreamReader(jsonStream!);
             var json = await sr.ReadToEndAsync();
 

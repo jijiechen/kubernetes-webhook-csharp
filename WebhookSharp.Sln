@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagePrinter", "ImagePrinter\ImagePrinter.csproj", "{A2AE0519-3A4E-4E67-A8CD-F38AF3CB48EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebhookSharp", "WebhookSharp\WebhookSharp.csproj", "{A2AE0519-3A4E-4E67-A8CD-F38AF3CB48EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagePrinter.Tests", "ImagePrinter.Tests\ImagePrinter.Tests.csproj", "{DDEFACBB-777F-42FA-A517-19FF076F8601}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebhookSharp.Tests", "WebhookSharp.Tests\WebhookSharp.Tests.csproj", "{DDEFACBB-777F-42FA-A517-19FF076F8601}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
